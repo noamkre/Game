@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="tik" style="border:1px black solid;" width="300" height="300"></canvas>
+
+    <script>
+        let canvas=  document.getElementById("tik")
+        let context = canvas.getContext("2d")
+        context.strokeStyle = 'blue'
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                context.strokeRect(j * 100, i * 100, 100, 100)
+                
+            }
+        }
+        
+       
+        
+    </script>
+</body>
+</html>

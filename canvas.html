@@ -1,0 +1,60 @@
+<canvas id="canvas" width="1000"  height="1000"></canvas>
+<img src="spaceship.png" id="spaceship">
+<button  id="left_button" style="position: absolute;left:50;top:200 ;">
+<img src="left_arrow.webp" width="30"> 
+</button>
+<button id="right_button" style="position: absolute;left:200;top:200 ;">
+    <img src="right_arrow.webp" width="30"> 
+</button>
+
+
+
+
+<script>
+    let canvas = document.getElementById('canvas')
+    let context = canvas.getContext('2d')
+    
+    context.fillStyle = 'blue'
+    // context.fillRect(100, 100, 50, 50 )
+    let img = document.getElementById('spaceship')
+    img.addEventListener('load', e => {
+        context.drawImage(img, 100, 100)
+    })
+    
+
+
+    let x = 100
+    let y = 100
+
+    window.addEventListener('keypress', e => {
+        if(e.key == "a" ){
+            context.clearRect(0, 0, canvas.width, canvas.height)
+            x = x - 10
+            context.drawImage(img, x, y)
+        }  if(e.key == "d" ){
+            context.clearRect(0, 0, canvas.width, canvas.height)
+            x = x + 10
+            context.drawImage(img, x, y)
+        } if(e.key == "w" ){
+            context.clearRect(0, 0, canvas.width, canvas.height)
+            y = y - 10
+            context.drawImage(img, x, y) 
+        } if(e.key == "s" ){
+            context.clearRect(0, 0, canvas.width, canvas.height)
+            y = y + 10
+          context.drawImage(img, x, y)
+        }}) 
+
+    let left_button = document.getElementById("left_button")
+    left_button.addEventListener("click", e => {
+        context.clearRect(0, 0, canvas.width, canvas.height)
+            x = x - 10
+            context.drawImage(img, x, y)
+    })
+    let right_button = document.getElementById("right_button")
+    right_button.addEventListener("click", e => {
+        context.clearRect(0, 0, canvas.width, canvas.height)
+            x = x + 10
+            context.drawImage(img, x, y)
+    })
+</script>

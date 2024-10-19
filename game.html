@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+    <img src="images/spaceship.png" id="spaceship">
+    <button id="left_button" style="position: absolute; left:30px; top:500px;">
+        <img src="images/left_arrow.webp" width="30"> 
+    </button>
+    <button id="right_button" style="position: absolute;left:200px; top:500px;">
+        <img src="images/right_arrow.webp" width="30"> 
+    </button>
+    <img id="bolet" src="images/bolet.png" width="20" style="position: absolute; left:100px; top:130px;" hidden>
+    <button id="missile">
+        <img src="images/missile.png" width="30" style="position: absolute; left:130px; top:500px;">
+    </button>
+    <img id="zombi" src="images/zombi.png" width="50" style="position: absolute; left:0; top:0;" hidden>
+ 
+<script>
+    let canvas = document.getElementById('canvas')
+    let context = canvas.getContext('2d')
+    
+    context.fillStyle = 'blue'
+    // context.fillRect(100, 100, 50, 50 )
+    let imgShip = document.getElementById('spaceship')
+    let imgzombi=document.getElementById("zombi")
+         
+    let zombies;
+    let firing = false;
+
+    class Zombi {
+        constructor (x, y, alive) {
+            this.x = x
+            this.y = y
+            this.alive = alive
+        }
+        draw(){
+            context.drawImage(imgzombi,this.x,this.y,40,40)
+        }
+
+        isBoletClose(x_bolet, y_bolet) {
+            let dx = Math.abs(this.x - x_bolet)
+            let dy = Math.abs(this.y - y_bolet)
+
+            if ((dx < 20) & (dy < 20)) { 
+                return true
+            }
+            return false
+        }
+    }
+    function createZombiesList(){
+        zombies_list = []
+        for(i=0;i <= 4;i++)
+            for(j=0;j <= 9;j++) {
+            zombies_list.push(1)
+        }
+        return zombies_list
+    }
+    zombies_alive = createZombiesList()
+    zombies = []
+    function createZombies(){
+ 
+        for(i=0;i <= 4;i++)
+        for(j=0;j <= 9;j++){
+            let zombi = new Zombi (j*40, i*40, zombies_alive[9*i+j] )
+            zombies.push(zombi)
+        }
+    }
+    createZombies()
+
+    function drawZombies(){
+        for (let zombi of zombies) {
+            if (zombi.alive==1)
+                zombi.draw()
+        }
+    }
+
+    function moveZombies(){
+        for(let zombi of zombies){
+            zombi.x =zombi.x + 0.25
+        }
+    }
+
+    let ship_x = 130
+    let ship_y = 400
+    let bolet_x;
+    let bolet_y;
+    
+    setInterval(drawGame, 100);
+
+    function drawGame() {
+        for(let zombi of zombies){
+            is_close = zombi.isBoletClose(bolet_x, bolet_y)
+            if ((is_close == true) & (zombi.alive==1)) {
+                zombi.alive = 0
+                firing = false
+            }
+        }
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        drawZombies()
+        context.drawImage(imgShip, ship_x, ship_y)
+        moveZombies()
+    
+        if (firing) {
+            let imgBolet = document.getElementById('bolet')
+            context.drawImage(imgBolet, bolet_x+5, bolet_y-20, 20,20) 
+            bolet_y = bolet_y - 10 
+            if (bolet_y < 0) {
+                firing = false;
+            }
+        }
+    }
+
+    window.addEventListener('keypress', e => {
+            if(e.key == "a" ){
+                ship_x = ship_x - 10
+            }  if(e.key == "d" ){
+                ship_x = ship_x + 10
+            } if(e.key == "w" ){
+                ship_y = ship_y - 10
+            } if(e.key == "s" ){
+                ship_y = ship_y + 10
+            }
+        } 
+        
+    )
+
+    let left_button = document.getElementById("left_button")
+    left_button.addEventListener("click", e => {
+        ship_x = ship_x - 10 
+    })
+
+    let right_button = document.getElementById("right_button")
+    right_button.addEventListener("click", e => {
+        ship_x = ship_x + 10
+    })
+
+    let missile = document.getElementById("missile")
+    missile.addEventListener("click", e => {
+        firing = true
+        bolet_x = ship_x
+        bolet_y = ship_y - 4
+    })
+</script>
+
+</body>
+</html>
+
