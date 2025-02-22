@@ -3,23 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Document</title>   
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; /* Space between canvas and buttons */
+        }
+
+        #controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between buttons */
+        }
+
+        button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <canvas id="canvas" width="1000" height="1000"></canvas>
-    <img src="images/spaceship.png" id="spaceship">
-    <button id="left_button" style="position: absolute; left:30px; top:500px;">
-        <img src="images/left_arrow.webp" width="30"> 
-    </button>
-    <button id="right_button" style="position: absolute;left:200px; top:500px;">
-        <img src="images/right_arrow.webp" width="30"> 
-    </button>
-    <img id="bolet" src="images/bolet.png" width="20" style="position: absolute; left:100px; top:130px;" hidden>
-    <button id="missile">
-        <img src="images/missile.png" width="30" style="position: absolute; left:130px; top:500px;">
-    </button>
-    <img id="zombi" src="images/zombi.png" width="50" style="position: absolute; left:0; top:0;" hidden>
- 
+    <div id="game-container">
+
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <div id="controls">
+            <img src="images/spaceship.png" id="spaceship" hidden>
+
+            <button id="left_button">
+                <img src="images/left_arrow.webp" width="30"> 
+            </button>
+            <button id="missile">
+                <img src="images/missile.png" width="30">
+            </button>
+            <button id="right_button">
+                <img src="images/right_arrow.webp" width="30"> 
+            </button>
+        </div>
+        
+        <img id="bolet" src="images/bolet.png" width="20" style="position: absolute; left:100px; top:130px;" hidden>
+      
+        <img id="zombi" src="images/zombi.png" width="50" style="position: absolute; left:0; top:0;" hidden>
+    </div>
 <script>
     let canvas = document.getElementById('canvas')
     let context = canvas.getContext('2d')
